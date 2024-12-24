@@ -1,39 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
-    <title>Formula Calculator</title>
+    <title>Tools</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 50px; }
-        input, button { padding: 10px; margin: 5px; }
+      body { font-family: Arial, sans-serif; margin: 50px; }
+      input, button { padding: 10px; margin: 5px; }
+      .container { display: flex; }
+      .calculator { margin-right: 50px; }
     </style>
-</head>
-<body>
-    <h1>Formula Calculator</h1>
-    <label for="a">a:</label>
-    <input type="number" id="a"><br>
-    <label for="b">b:</label>
-    <input type="number" id="b"><br>
-    <label for="p">p:</label>
-    <input type="number" id="p"><br>
-    <label for="q">q:</label>
-    <input type="number" id="q"><br>
-    <button onclick="calculate()">Calculate</button>
-    <h2>Result: <span id="result"></span></h2>
+  </head>
+  <body>
+    <h1>Singleshot</h1>
+    <div class="container">
+      <div class="calculator">
+        <label for="b">PL:</label>
+		<input type="number" id="b"><br>
+        <label for="p">Win rate:</label>
+        <input type="number" id="p"><br>
+        <label for="q">Fail rate:</label>
+        <input type="number" id="q"><br>
+        <button onclick="calculate()">Calculate</button>
+        <h2>Result (ratio): <span id="result"></span></h2>
+      </div>
+      <div class="calculator">
+        <label for="rsi">rsi:</label>
+        <input type="number" id="rsi"><br>
+        <label for="macd">macd(-5,5):</label>
+        <input type="number" id="macd"><br>
+        <button onclick="calculatev2()">Calculate</button>
+        <h2>Result (ratio): <span id="result2"></span></h2>
+      </div>
+    </div>
 
     <script>
-        function calculate() {
-            const a = parseFloat(document.getElementById('a').value);
-            const b = parseFloat(document.getElementById('b').value);
-            const p = parseFloat(document.getElementById('p').value);
-            const q = parseFloat(document.getElementById('q').value);
-            if (a !== 0 && b !== 0) {
-                const res = p / a - q / b;
-                document.getElementById('result').innerText = res;
-            } else {
-                document.getElementById('result').innerText = 'Error: a and b must not be 0';
-            }
-        }
+      function calculate() {
+          const b = parseFloat(document.getElementById('b').value);
+          const p = parseFloat(document.getElementById('p').value);
+          const q = parseFloat(document.getElementById('q').value);
+
+          if ( b !== 0) {
+              const res = (p  - q / b).toFixed(4);
+              document.getElementById('result').innerText = res;
+          } else {
+              document.getElementById('result').innerText = 'Error: a and b must not be 0';
+          }
+
+      }
+
+	  function calculatev2() {
+		  const rsi = parseFloat(document.getElementById('rsi').value);
+		  const macd = parseFloat(document.getElementById('macd').value);
+
+		  var p = (100.0-rsi)/100.0;
+		  var q = (rsi)/100.0;
+		  var pl = (15.0-macd)/6.5;
+
+          if (p !== 0 && q !== 0) {
+              const res2 = (p - q / pl).toFixed(4);
+              document.getElementById('result2').innerText = res2;
+          } else {
+              document.getElementById('result2').innerText = 'Error: a and b must not be 0';
+          }
+
+          // Sync values for the second calculator
+          document.getElementById('rsi').value = rsi;
+          document.getElementById('macd').value = macd;
+      }
+
     </script>
-</body>
+  </body>
 </html>
