@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formula Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Formula Calculator</h1>
+    <label for="a">a:</label>
+    <input type="number" id="a"><br>
+    <label for="b">b:</label>
+    <input type="number" id="b"><br>
+    <label for="p">p:</label>
+    <input type="number" id="p"><br>
+    <label for="q">q:</label>
+    <input type="number" id="q"><br>
+    <button onclick="calculate()">Calculate</button>
+    <h2>Result: <span id="result"></span></h2>
+
+    <script>
+        function calculate() {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const p = parseFloat(document.getElementById('p').value);
+            const q = parseFloat(document.getElementById('q').value);
+            if (a !== 0 && b !== 0) {
+                const res = p / a - q / b;
+                document.getElementById('result').innerText = res;
+            } else {
+                document.getElementById('result').innerText = 'Error: a and b must not be 0';
+            }
+        }
+    </script>
+</body>
+</html>
